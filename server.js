@@ -189,7 +189,7 @@ const sendVerificationRequest = async (connectionId) => {
                 'Authorization': `Bearer ${TOKEN}`
             }
         });
-        showConsole(`Verification request is sent successfully for connectionId ${connectionId} and policyId ${policyId}`);
+        showConsole(`Verification request is sent successfully for connectionId ${connectionId}`);
     } catch (error) {
         showConsole(`Sending verification request is failed due to ${error.message}\n\n`);
     }
