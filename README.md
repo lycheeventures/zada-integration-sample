@@ -35,3 +35,7 @@ To run the application successfully, please follow these steps:
     npm 6.14.4
   </li>
 </ol>
+
+# Watch demo video
+
+[![Watch the video](http://i.imgur.com/ia3Jrgc.png)](https://youtu.be/FGAOI8-BhBk)
