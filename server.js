@@ -6,9 +6,14 @@ else
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const moment = require('moment');
 const axios = require('axios').default;
 const ngrok = require('ngrok');
+const QRCode = require('qrcode');
+const { showConsole } = require('./helper/utils');
+const { askWebhookUrl, askWebhook, askAction } = require('./helper/cli_inputs');
+var Storage = require('node-storage');
+var store = new Storage('cache');
+const { issueCredential } = require('./api/issueCred');
 
 let TOKEN = '';
 
@@ -16,9 +21,6 @@ let TOKEN = '';
  * Function to show console logs in specified format
  * @param {String} message 
  */
-const showConsole = (message) => {
-    console.log(`Time: ${moment().format('DD/MM/YYYY')} ~ ${message}`);
-}
 
 /****** INITIALIZING EXPRESS SERVER STARTS ******/
 const app = express();
@@ -61,6 +63,8 @@ const authenticateTenant = async () => {
         });
 
         TOKEN = result.data.token;
+        store.put('TOKEN', TOKEN);
+
         showConsole(`${process.env.TENANT_ID} Tenant is successfully authenticated\n\n`);
     } catch (error) {
         showConsole(`Authentication got error ${error.message}\n\n`);
@@ -97,33 +101,6 @@ const createConnection = async (connectionName) => {
  * @param {String} connectionId 
  * @returns 
  */
-const getConnectedUserDetails = async (connectionId) => {
-    try {
-        const result = await axios({
-            url: `${process.env.CORE_API_URL}/api/connection/get_connection`,
-            method: 'GET',
-            params: {
-                connectionId: connectionId,
-            },
-            headers: {
-                'Authorization': `Bearer ${TOKEN}`
-            }
-        });
-
-        // Decoding name property from connection details
-        const encodedName = result.data.connection.name;
-        var bufferedString = Buffer.from(encodedName, 'base64');
-        const decodedString = bufferedString.toString('utf8');
-        let decodedParts = decodedString.split(':');
-        return {
-            phone: decodedParts[1],
-            name: decodedParts[2],
-            userId: decodedParts[3],
-        }
-    } catch (error) {
-        showConsole(`Getting user details got error ${error.message}\n\n`);
-    }
-}
 
 /**
  * Function to get verification details for user's submitted verification
@@ -195,48 +172,73 @@ const sendVerificationRequest = async (connectionId) => {
     }
 }
 
+
+// Generate QR
+const generateQr = () => {
+
+    // Creating the data
+    let data = {
+        type: "connection_request",
+        metadata: "99375be8-2932-4597-881e-de8a5810e1b4"
+    }
+
+    // Converting the data into String format
+    let stringdata = JSON.stringify(data)
+
+    // Print the QR code to terminal
+    QRCode.toString(stringdata, { type: 'terminal', small: true },
+        function (err, QRcode) {
+            if (err) return console.log("error occurred")
+            // Printing the generated code
+            console.log(QRcode)
+        })
+
+}
+// Generate QR
+
+
 /****** SERVER ROUTES STARTS ******/
 
 // Route to check is server running
 app.get('/', (req, res) => {
     res.status(200).json({ success: true })
-})
+});
+
+const api = {
+    webhooks: require("./api/webhooks"),
+};
+
+app.use("/", api.webhooks);
 
 /****** SERVER ROUTES ENDS ******/
-/*
-    This webhook will be triggered when ZADA Wallet user
-    will make connection successfully using above generated
-    connection's metadata or submit verification requests
-    successfully
-*/
-app.post('/webhook', async (req, res) => {
-    try {
-        const {
-            message_type,
-            object_id
-        } = req.body;
 
-        if (message_type == "new_connection") {
-            const userDetails = await getConnectedUserDetails(object_id);
-            showConsole(`Connection Result\nJSON OUTPUT: ${JSON.stringify(req.body, null, 4)}\n\nConnected User Details\n${JSON.stringify(userDetails, null, 4)}\n\n`);
-            await sendVerificationRequest(object_id);
-        }
-        else {
-            const credentialData = await getVerificationDetails(req.body.object_id);
-            showConsole(`Verification Result\n${JSON.stringify(req.body)}\n\nUser Credential Data\n${JSON.stringify(credentialData, null, 4)}`);
-        }
-    } catch (error) {
-        showConsole(error.message);
-    }
-});
 
 /****** RUNNING EXPRESS SERVER STARTS ******/
 app.listen(PORT, async function () {
-    const NGROK_URL = await ngrok.connect({ proto: 'http', addr: 'http://localhost:7500' });
-    console.log(`Server is listening on\nURL: ${NGROK_URL}\nPORT: ${PORT}\n\n`);
+    store.remove('TOKEN');
+    store.remove('USER');
+    // const ansAction = await askAction.run();
+
+    // if (ansAction == 'Create New Connection') {
+
+    const ansWebhook = await askWebhook.run();
+    let WEBHOOK_URL = '';
+
+    if (ansWebhook == 'YES') {
+        const ansWebhookUrl = await askWebhookUrl.run();
+        WEBHOOK_URL = ansWebhookUrl;
+    } else {
+        const NGROK_URL = await ngrok.connect({ proto: 'http', addr: 'http://localhost:7500' });
+        WEBHOOK_URL = NGROK_URL;
+    }
+
+    // console.log(`Server is listening on\nURL: ${WEBHOOK_URL}\nPORT: ${PORT}\n\n`);
     await authenticateTenant();
-    await createWebhook(`${NGROK_URL}/${process.env.WEBHOOK_ROUTE}`);
-    await createConnection(process.env.CONNECTION_NAME);
+    await createWebhook(`${WEBHOOK_URL}/${process.env.WEBHOOK_ROUTE}`);
+
+    generateQr();
+    // }
+
 });
 /****** RUNNING EXPRESS SERVER ENDS ******/
 
