@@ -1,8 +1,8 @@
-<h1>ZADA Verifier Demo</h1>
+<h1>ZADA CORE API TUTORIAL</h1>
 
 # Description
 <p>
-This is a demo related to ZADA Verifier, in which tenant can make connection and send verification request to made connections. 
+This is a demo related to ZADA Core API, in which tenant can make connection, issue credentials and send verification request to made connections. 
 Also tenant can create webhook to get data on connection acceptance and verification submission 
 from ZADA Wallet mobile application.
 </p>
