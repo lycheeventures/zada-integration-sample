@@ -2,7 +2,7 @@
 
 # Description
 <p>
-This is a demo related to ZADA Core API, in which tenant can make connection, issue credentials and send verification request to made connections. 
+This is a demo related to ZADA Core API, in which tenant can make connection, issue credentials and send verification request. 
 Also tenant can create webhook to issue credentials, connection acceptance and verification submission 
 from ZADA Wallet mobile application.
 </p>
