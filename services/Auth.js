@@ -79,12 +79,12 @@ class AuthServicesClass {
                     resolve(userData);
 
                 }).catch((error) => {
-                    showConsole(`Authentication got error ${error.message}\n\n`);
+                    showConsole(`Get Connection got error ${error.message}\n\n`);
                     resolve(false)
                 });
 
             } catch (error) {
-                showConsole(`Authentication got error ${error.message}\n\n`);
+                showConsole(`Get Connection got error ${error.message}\n\n`);
                 reject(error)
             }
         })

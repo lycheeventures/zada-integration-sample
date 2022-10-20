@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=debug nodemon server",
-    "test": "NODE_ENV=test nodemon server"
+    "dev": "node server",
+    "test": "node server"
   },
   "keywords": [],
   "author": "",

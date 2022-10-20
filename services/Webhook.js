@@ -70,7 +70,7 @@ class WebhookServicesClass {
                 }).then((response) => {
                     resolve(true);
                 }).catch((error) => {
-                    showConsole(`Creating webhook got error ${error.message}\n\n`);
+                    showConsole(`Deleting webhook got error ${error.message}\n\n`);
                     resolve(false)
                 });
 

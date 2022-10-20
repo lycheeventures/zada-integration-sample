@@ -34,7 +34,7 @@ class ConnectionServicesClass {
                     }
                 }).then((response) => {
                     setMemoryValue('USER', response.data.connection);
-                    showConsole(`Connection is created successfully against name ${connectionName}\nJSON OUTPUT\n${JSON.stringify(response.data.connection, null, 4)}\n\nOpen this URL in browser and scan with ZADA Wallet App to make Connection: ${response.data.connection.zadaURL}\n\n`);
+                    showConsole(`Connection is created successfully against name ${connectionName}\nJSON OUTPUT\n${JSON.stringify(response.data.connection, null, 4)}\n\n Scan QR with ZADA Wallet App to make Connection \n\n`);
                     resolve(response.data.connection);
                 }).catch((error) => {
                     showConsole(`Creating Connection got error for name ${error.message}\n\n`);

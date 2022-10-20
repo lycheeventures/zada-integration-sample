@@ -43,7 +43,7 @@ class IssuanceServicesClass {
                 })
                     .then(res => res.json())
                     .then(json => {
-                        console.log("🚀 ~ file: issuance.js ~ line 27 ~ issueCredential ~ json", json)
+                        console.log("\n Successfully credential issued.\n");
                         resolve(true);
                     }).catch((data) => {
                         showConsole("issueCredential fetch catch:", data);
@@ -51,7 +51,7 @@ class IssuanceServicesClass {
                     })
 
             } catch (error) {
-                showConsole(`Creating Connection got error for name ${error.message}\n\n`);
+                showConsole(`Issue Credential got error ${error.message}\n\n`);
                 reject(error)
             }
         })

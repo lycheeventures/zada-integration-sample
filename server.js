@@ -56,8 +56,6 @@ app.use("/", api.webhooks);
 /****** RUNNING EXPRESS SERVER STARTS ******/
 app.listen(PORT, async function () {
 
-    // store.get('WEBHOOK') && await WebhookServicesClass.deleteWebhook(store.get('WEBHOOK').id);
-
     const NGROK_URL = await ngrok.connect({ proto: 'http', addr: 'http://localhost:7500' });
 
     console.log(`Server is listening on\nURL: ${NGROK_URL}\nPORT: ${PORT}\n\n`);
@@ -69,9 +67,9 @@ app.listen(PORT, async function () {
 
     // Get Connection name from user using CLI
     const ansConnectionName = await askConnectionName.run();
-    
+
     // Register Webhook it will trigger after creating connection and verification
-    let connection = await ConnectionServicesClass.createConnection(ansConnectionName);
+    let connection = await ConnectionServicesClass.createConnection(ansConnectionName ? ansConnectionName : process.env.CONNECTION_NAME);
 
     // new URL object
     const current_url = new URL(connection.zadaQR);

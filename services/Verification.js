@@ -11,11 +11,11 @@ else
 class VerificationServicesClass {
 
     /**
-  * Function to send verification request to already connected
-  * ZADA Wallet user.
-  * @param {String} connectionId 
-  * @param {String} policyId 
-  */
+     * Function to send verification request to already connected
+     * ZADA Wallet user.
+     * @param {String} connectionId 
+     * @param {String} policyId 
+     */
     sendVerificationRequest = (connectionId) => {
 
         return new Promise((resolve, reject) => {
@@ -57,8 +57,6 @@ class VerificationServicesClass {
 
         return new Promise((resolve, reject) => {
             try {
-
-                showConsole('Sending verification request...');
 
                 axios({
                     url: `${process.env.CORE_API_URL}/api/credential/get_verification_status`,
