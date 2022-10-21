@@ -8,9 +8,7 @@ from ZADA Wallet mobile application.
 </p>
 
 # How to run
-<p>
-To run the application successfully, please follow these steps:
-</p>
+<p>To run the application successfully, please follow these steps:</p>
 <ol>
   <li>
     Clone repo using this command <code>git clone REPO URL</code>
@@ -36,119 +34,21 @@ To run the application successfully, please follow these steps:
   </li>
 </ol>
 
-# Usage
+# Working & Usage
 
-<p>Below mentioned some code of core functions</p>
+<p>Below mentioned steps shows the working of core api</p>
 
->This code is used to register webhook url in core api by passing url parameter that will trigger when new connection and verification request action occur.
+* Initially you have to install ZADA Wallet Test App (IOS/ANDROID).
+* Start test server using <code>npm run test</code> command.
+* After server running it'll authenticate with core api on the basis of <code>Tenant Id</code> & <code>Tenant Secret</code>
+* After authentication complete, It'll register webhook to perform actions like credentials issuance or verification furthermore you can put your on webhook url just a little bit change in code. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/server.js#L67)
+* It'll ask for connection name to create new connection for mobile and web server connection establishment. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/server.js#L73)
+* After that you can see a QR visible in cli scan it with you ZADA App to establish connection.
+* Now it'll ask you either you want to <code>issue credentials [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/services/Issuance.js#L23)</code> or <code>verification [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/services/Verification.js#L11)</code> select your choice if you choose issuance then you'll get demo credentials on your wallet other than if you choose verification then you'll receive verification request.
 
-```JavaScript
-createWebhook = (webhook) => {
-  return new Promise((resolve, reject) => {
-      try {
+>NOTE:
+<p>Please Watch Demo Video for your better understanding.</p>
 
-          showConsole(`Creating Webhook ${webhook}`);
-
-          axios({
-              url: `${process.env.CORE_API_URL}/api/webhook/create_webhook`,
-              method: 'POST',
-              data: {
-                  endpointUrl: webhook,
-              },
-              headers: {
-                  'Authorization': `Bearer ${getMemoryValue('TOKEN')}`
-              }
-          }).then((response) => {
-              setMemoryValue('WEBHOOK', response.data.webhook);
-              showConsole(`Webhook is created successfully\n\n`);
-              resolve(true);
-          }).catch((error) => {
-              showConsole(`Creating webhook got error ${error.message}\n\n`);
-              resolve(false)
-          });
-
-
-      } catch (error) {
-          showConsole(`Creating webhook got error ${error.message}\n\n`);
-          reject(error)
-      }
-  })
-}
-```
-
->This piece of code used to issued credentials to your wallet by passing credential definition and data object that you want to send.
-
-```JavaScript
-issueCredential = (credDef, credentialsObject) => {
-  return new Promise((resolve, reject) => {
-      try {
-
-          const connectionId = getMemoryValue('USER').connectionId;
-
-          const formData = new FormData();
-          formData.append('definitionId', credDef);
-          formData.append('connectionId', connectionId);
-          formData.append('credentialValues', JSON.stringify(JSON.stringify(credentialsObject)));
-          formData.append('sendEmail', 'false');
-          formData.append('sendSms', 'false');
-
-          var OFFER_CRED_API_PATH = process.env.CORE_API_URL + '/api/credential/offer_credential'
-
-          return fetch(OFFER_CRED_API_PATH, {
-              method: 'POST',
-              body: formData,
-              headers: { 'Authorization': 'Bearer ' + getMemoryValue('TOKEN') }
-          })
-              .then(res => res.json())
-              .then(json => {
-                  resolve(true);
-              }).catch((data) => {
-                  showConsole("issueCredential fetch catch:", data);
-                  reject(false);
-              })
-
-      } catch (error) {
-          showConsole(`Issue Credential got error ${error.message}\n\n`);
-          reject(error)
-      }
-  })
-}
-```
-
->This code is used to send credential verification to your wallet by passing connectionId parameter.
-
-```JavaScript
-sendVerificationRequest = (connectionId) => {
-  return new Promise((resolve, reject) => {
-      try {
-
-          showConsole('Sending verification request...');
-
-          axios({
-              url: `${process.env.CORE_API_URL}/api/credential/submit_verification`,
-              method: 'POST',
-              data: {
-                  connectionId: connectionId,
-                  policyId: process.env.POLICY_ID
-              },
-              headers: {
-                  'Authorization': `Bearer ${getMemoryValue('TOKEN')}`
-              }
-          }).then(json => {
-              showConsole(`Verification request is sent successfully for connectionId ${connectionId}`);
-              resolve(true);
-          }).catch((error) => {
-              showConsole(`Sending verification request is failed due to ${error.message}\n\n`);
-              reject(false);
-          })
-
-      } catch (error) {
-          showConsole(`Sending verification request is failed due to ${error.message}\n\n`);
-          reject(error)
-      }
-  })
-}
-```
 
 # Watch demo video
 

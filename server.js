@@ -62,13 +62,14 @@ app.listen(PORT, async function () {
 
     // Authenication with Core API to execute all end points
     await AuthServices.authenticateTenant();
-    // 
+    
+    // Register Webhook it will trigger after creating connection and verification
     await WebhookServicesClass.createWebhook(`${NGROK_URL}/${process.env.WEBHOOK_ROUTE}`);
 
     // Get Connection name from user using CLI
     const ansConnectionName = await askConnectionName.run();
 
-    // Register Webhook it will trigger after creating connection and verification
+    // create connection by passing connection name
     let connection = await ConnectionServicesClass.createConnection(ansConnectionName ? ansConnectionName : process.env.CONNECTION_NAME);
 
     // new URL object
