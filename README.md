@@ -40,7 +40,7 @@ from ZADA Wallet mobile application.
 
 * Initially you have to install ZADA Wallet Test App (IOS/ANDROID).
 * Start test server using <code>npm run test</code> command.
-* After server running it'll authenticate with core api on the basis of <code>Tenant Id</code> & <code>Tenant Secret</code>
+* After server run it'll authenticate with core api on the basis of <code>Tenant Id</code> & <code>Tenant Secret</code>
 * After authentication complete, It'll register webhook to perform actions like credentials issuance or verification furthermore you can put your on webhook url just a little bit change in code. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L67)
 * It'll ask for connection name to create new connection for mobile and web server connection establishment. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L73)
 * After that you can see a QR visible in cli scan it with you ZADA App to establish connection.
