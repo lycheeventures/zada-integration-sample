@@ -41,10 +41,10 @@ from ZADA Wallet mobile application.
 * Initially you have to install ZADA Wallet Test App (IOS/ANDROID).
 * Start test server using <code>npm run test</code> command.
 * After server running it'll authenticate with core api on the basis of <code>Tenant Id</code> & <code>Tenant Secret</code>
-* After authentication complete, It'll register webhook to perform actions like credentials issuance or verification furthermore you can put your on webhook url just a little bit change in code. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/server.js#L66)
-* It'll ask for connection name to create new connection for mobile and web server connection establishment. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/server.js#L72)
+* After authentication complete, It'll register webhook to perform actions like credentials issuance or verification furthermore you can put your on webhook url just a little bit change in code. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L67)
+* It'll ask for connection name to create new connection for mobile and web server connection establishment. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L73)
 * After that you can see a QR visible in cli scan it with you ZADA App to establish connection.
-* Now it'll ask you either you want to <code>issue credentials [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/services/Issuance.js#L23)</code> or <code>verification [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/98ff4ca753ed79697f5eab5c8f6168586d6f5077/services/Verification.js#L19)</code> select your choice if you choose issuance then you'll get demo credentials on your wallet other than if you choose verification then you'll receive verification request.
+* Now it'll ask you either you want to <code>issue credentials [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/services/Issuance.js#L23)</code> or <code>verification [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/services/Verification.js#L19)</code> select your choice if you choose issuance then you'll get demo credentials on your wallet other than if you choose verification then you'll receive verification request.
 
 >NOTE:
 <p>Please Watch Demo Video for your better understanding.</p>
