@@ -43,7 +43,7 @@ from ZADA Wallet mobile application.
 * After server run it'll authenticate with core api on the basis of <code>Tenant Id</code> & <code>Tenant Secret</code>
 * After authentication complete, It'll register webhook to perform actions like credentials issuance or verification furthermore you can put your on webhook url just a little bit change in code. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L67)
 * It'll ask for connection name to create new connection for mobile and web server connection establishment. [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/server.js#L73)
-* After that you can see a QR visible in cli scan it with you ZADA App to establish connection.
+* After that you can see a QR visible in cli scan it with your ZADA App to establish connection.
 * Now it'll ask you either you want to <code>issue credentials [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/services/Issuance.js#L23)</code> or <code>verification [Code Reference](https://github.com/ssiddiqui-alabz/zada-core-tutorial/blob/dev/services/Verification.js#L19)</code> select your choice if you choose issuance then you'll get demo credentials on your wallet other than if you choose verification then you'll receive verification request.
 
 >NOTE:
