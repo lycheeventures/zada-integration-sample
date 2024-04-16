@@ -1,0 +1,40 @@
+# Web Implementation
+
+# Usage
+
+1. Create a JSON Object.
+2. Convert this object into QR Code.
+3. Scan QR Code from ZADA Wallet to perform the verification.
+
+### Steps
+
+1. Pass <b>type</b> as "connectionless-verification".
+2. Pass <b>metadata</b> object containing policyId and tenantId.
+3. Pass <b>policyId</b> as argument. You can get <b>policyId</b> from the [policies section](policies.md)
+4. You can get <b>tenantId</b> from the tenant that you have created in the tenant section.
+5. Pass <b>rcb</b> as redirect-url. This will be called by ZADA Wallet after successful verification. You can pass a deeplink to your application to make sure that user returns back to your application from ZADA Wallet.
+6. Pass <b>wcb</b> as webhook-url. This will be called by ZADA Wallet after successful verification. You can pass a webhook URL to receive verification data.
+
+```sh
+let jsonObject = {
+    “type”: "connectionless-verification",
+    “metadata”: {
+      “policyId”: "policy-Id",
+      “tenantId”: "your-tenant-Id”,
+    },
+    “rcb”: "redirect-url",
+    “wcb”: "webhook-url",
+  }
+```
+
+Convert the above JSON Object to QR Code.
+
+```sh
+Using any library or online tool convert the above JSON Object to QR Code.
+```
+
+Scan the QR Code from ZADA Wallet to perform the verification.
+
+```sh
+Open ZADA wallet and scan this QR code to perform verifications.
+```
